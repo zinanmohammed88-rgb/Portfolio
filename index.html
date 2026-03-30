@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mohammed Zinan — AI & Data Science Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdfcf8;        /* Soft Cream */
+      --ink: #2c312c;       /* Deep Forest Grey */
+      --accent: #7a8d7a;    /* Sage Green */
+      --gold: #d4a373;      /* Muted Gold */
+      --muted: #8e948e;     /* Stone Grey */
+      --border: #e2e2d8;    /* Pale Border */
+      --card-bg: #f7f6f0;   /* Sandstone */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+      line-height: 1.5;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed; width: 10px; height: 10px; background: var(--gold);
+      border-radius: 50%; pointer-events: none; z-index: 9999;
+      transition: width 0.3s, height 0.3s; transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px; border: 1px solid var(--accent);
+      border-radius: 50%; pointer-events: none; z-index: 9998;
+      transition: width 0.3s, height 0.3s, transform 0.1s linear; transform: translate(-50%, -50%);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 50px; z-index: 1000; transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(253, 252, 248, 0.95); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-style: italic; }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a { text-decoration: none; color: var(--ink); font-size: 0.8rem; letter-spacing: 1px; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .hero-pre { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 20px; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 10vw, 6rem); font-weight: 300; line-height: 1; margin-bottom: 30px; }
+    .hero h1 span { display: block; font-style: italic; color: var(--accent); padding-left: 60px; }
+    .hero-meta { display: flex; gap: 60px; border-top: 1px solid var(--border); padding-top: 30px; margin-top: 20px; }
+    .meta-item span { display: block; font-size: 0.7rem; color: var(--muted); margin-bottom: 5px; }
+
+    /* SECTIONS */
+    section { padding: 140px 0; border-top: 1px solid var(--border); }
+    .section-label { font-size: 0.7rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 60px; display: block; }
+    
+    /* ABOUT */
+    .about-content { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; }
+    .about-text { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; line-height: 1.4; color: var(--ink); }
+    .about-details { font-size: 0.9rem; color: var(--muted); display: flex; flex-direction: column; gap: 30px; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+    .skill-card { background: var(--card-bg); padding: 40px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+    .skill-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 10px; }
+    .skill-level { font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+    .skill-bar-bg { width: 100%; height: 1px; background: var(--border); margin: 25px 0; position: relative; }
+    .skill-bar { height: 1px; background: var(--gold); width: 0; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
+
+    /* PROJECTS */
+    .project-row { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; margin-bottom: 80px; }
+    .project-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 15px; }
+    .project-tags { display: flex; gap: 15px; font-size: 0.7rem; color: var(--muted); margin-bottom: 25px; }
+    .project-link { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 4px; transition: 0.3s; }
+    .project-link:hover { color: var(--gold); }
+
+    /* FOOTER */
+    footer { padding: 100px 0; background: var(--card-bg); }
+    .footer-flex { display: flex; justify-content: space-between; align-items: flex-end; }
+    .footer-contact h2 { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; margin-bottom: 20px; }
+    .footer-socials { display: flex; gap: 30px; list-style: none; }
+    .footer-socials a { text-decoration: none; color: var(--ink); font-size: 0.8rem; }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .about-content, .project-row { grid-template-columns: 1fr; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero-meta { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="ring"></div>
+
+  <nav id="mainNav">
+    <div class="nav-logo">MZ</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-pre fade-up">Portfolio — 2026</div>
+      <h1 class="fade-up">Mohammed <span>Zinan.</span></h1>
+      <div class="hero-meta fade-up">
+        <div class="meta-item"><span>Discipline</span>AI & Data Science Student</div>
+        <div class="meta-item"><span>Location</span>Kerala, India</div>
+        <div class="meta-item"><span>Focus</span>Intelligent Systems</div>
+      </div>
+    </section>
+
+    <section id="about">
+      <span class="section-label">01 — Background</span>
+      <div class="about-content">
+        <div class="about-text fade-up">
+          I am an AI & Data Science student driven by the pursuit of discovering <i>hidden patterns</i> within complex structures.
+        </div>
+        <div class="about-details fade-up">
+          <p>Moving beyond simple automation, I focus on the intersection of mathematical logic and computational efficiency. My goal is to architect systems that don't just process data, but provide actionable intelligence.</p>
+          <p>I thrive in environments that challenge the status quo, utilizing Python and relational architecture to build the backbone of modern intelligent applications.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <span class="section-label">02 — Expertise</span>
+      <div class="skills-grid">
+        <div class="skill-card fade-up">
+          <span class="skill-level">Advanced</span>
+          <h3>Python</h3>
+          <div class="skill-bar-bg"><div class="skill-bar" data-width="90%"></div></div>
+          <p>Data Wrangling & Automation</p>
+        </div>
+        <div class="skill-card fade-up">
+          <span class="skill-level">Specialized</span>
+          <h3>MySQL</h3>
+          <div class="skill-bar-bg"><div class="skill-bar" data-width="75%"></div></div>
+          <p>Database Architecture</p>
+        </div>
+        <div class="skill-card fade-up">
+          <span class="skill-level">Foundational</span>
+          <h3>C Programming</h3>
+          <div class="skill-bar-bg"><div class="skill-bar" data-width="50%"></div></div>
+          <p>Logic Fundamentals</p>
+        </div>
+        <div class="skill-card fade-up">
+          <span class="skill-level">Competent</span>
+          <h3>Web Stack</h3>
+          <div class="skill-bar-bg"><div class="skill-bar" data-width="55%"></div></div>
+          <p>Interface Development</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <span class="section-label">03 — Projects</span>
+      
+      <div class="project-row fade-up">
+        <div class="project-info">
+          <div class="project-tags"><span>Python</span> <span>MySQL</span> <span>Backend</span></div>
+          <h4>Bookstore Management</h4>
+          <p>A sophisticated database-driven system facilitating real-time inventory and automated billing cycles.</p>
+          <br>
+          <a href="https://github.com/zinanmohammed88-rgb/bookstore-management-system" target="_blank" class="project-link">View Source Code —></a>
+        </div>
+      </div>
+
+      <div class="project-row fade-up">
+        <div class="project-info">
+          <div class="project-tags"><span>Automation</span> <span>Hardware Logic</span></div>
+          <h4>Auto Roll Rain Shield</h4>
+          <p>An intelligent environmental response system utilizing sensor data to deploy protective shielding automatically.</p>
+          <br>
+          <a href="https://github.com/zinanmohammed88-rgb/auto-roll-rain-shield" target="_blank" class="project-link">View Documentation —></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-flex">
+        <div class="footer-contact">
+          <span class="section-label" style="margin-bottom:20px;">04 — Contact</span>
+          <h2>Let's build <br>something <i>intelligent.</i></h2>
+          <a href="mailto:zinanmohammed88@gmail.com" class="project-link" style="font-size:1.5rem;">zinanmohammed88@gmail.com</a>
+        </div>
+        <div>
+          <ul class="footer-socials">
+            <li><a href="https://github.com/zinanmohammed88-rgb" target="_blank">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/mohammed-zinan-8091b2386" target="_blank">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:80px; font-size:0.6rem; color:var(--muted); letter-spacing:2px;">© 2026 MOHAMMED ZINAN. ALL RIGHTS RESERVED.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor Movement
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    });
+
+    const animCursor = () => {
+      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
+    };
+    animCursor();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { 
+        cursor.style.width = '20px'; cursor.style.height = '20px'; 
+        ring.style.width = '60px'; ring.style.height = '60px'; 
+      });
+      el.addEventListener('mouseleave', () => { 
+        cursor.style.width = '10px'; cursor.style.height = '10px'; 
+        ring.style.width = '36px'; ring.style.height = '36px'; 
+      });
+    });
+
+    // Nav Scroll Effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
+
+    // Reveal Animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Animate skill bars specifically
+          const bar = entry.target.querySelector('.skill-bar');
+          if (bar) bar.style.width = bar.getAttribute('data-width');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
